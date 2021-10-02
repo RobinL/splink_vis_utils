@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/RobinL/splink_vis_utils/issues"
   },
-  "homepage": "https://github.com/RobinL/splink_vis_utils#readme"
+  "homepage": "https://github.com/RobinL/splink_vis_utils#readme",
+  "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "rollup": "^2.58.0",
+    "rollup-plugin-terser": "^7.0.2"
+  },
+  "type": "module"
 }

@@ -1,0 +1,15 @@
+{
+    "configurations": [
+
+    {
+        "name": "Robin",
+
+        "request": "launch",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "type": "pwa-node",
+        "args": ["--experimental-modules", "--experimental-json-modules", "./delete.js"]
+    }
+    ]
+}

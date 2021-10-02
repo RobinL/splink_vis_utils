@@ -1,3 +1,5 @@
+export const log2 = Math.log2;
+
 export function bayes_factor_to_prob(b) {
   return b / (b + 1);
 }
