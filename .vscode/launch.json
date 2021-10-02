@@ -1,15 +1,22 @@
 {
     "configurations": [
-
     {
         "name": "Robin",
-
         "request": "launch",
         "skipFiles": [
             "<node_internals>/**"
         ],
         "type": "pwa-node",
         "args": ["--experimental-modules", "--experimental-json-modules", "./delete.js"]
-    }
+    },
+    {
+        "type": "node",
+        "name": "vscode-jest-tests",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/.bin/jest",
+        "env": {
+            "NODE_OPTIONS": "--experimental-vm-modules",
+        }
+      },
     ]
 }
