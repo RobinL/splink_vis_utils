@@ -9,6 +9,11 @@
       "on": [{ "events": "@nodes:click", "update": "datum" }]
     },
     {
+      "name": "nodeRadius",
+      "value": 8,
+      "bind": { "input": "range", "min": 1, "max": 50, "step": 1 }
+    },
+    {
       "name": "edge_click",
       "on": [{ "events": "@edges:click", "update": "datum" }]
     },
@@ -21,12 +26,12 @@
     },
     {
       "name": "linkDistance",
-      "value": 0.7,
-      "bind": { "input": "range", "min": 0.1, "max": 1, "step": 0.01 }
+      "value": 20,
+      "bind": { "input": "range", "min": 0.1, "max": 100, "step": 1 }
     },
     {
       "name": "vis_height",
-      "value": 500,
+      "value": 200,
       "bind": { "input": "range", "min": 400, "max": 2000, "step": 50 }
     },
     {
@@ -34,6 +39,7 @@
       "value": 894,
       "bind": { "input": "range", "min": 400, "max": 2000, "step": 50 }
     },
+    { "name": "static", "value": true, "bind": { "input": "checkbox" } },
     {
       "description": "State variable for active node fix status.",
       "name": "fix",
@@ -83,7 +89,7 @@
       "range": { "scheme": "category20c" }
     },
     {
-      "name": "link_color",
+      "name": "link_colour",
       "type": "linear",
       "domain": { "data": "link-data", "field": "edge_betweenness" },
       "range": { "scheme": "redyellowgreen" },
@@ -96,14 +102,14 @@
       "reverse": false,
       "zero": true,
       "domain": { "data": "node-data", "field": "eigen_centrality" },
-      "range": [10, 1500]
+      "range": [100, 200]
     },
     {
       "name": "edge_length_scale",
       "type": "linear",
       "nice": false,
       "domain": { "data": "link-data", "field": "edge_betweenness" },
-      "range": [100, 400]
+      "range": [100, 200]
     }
   ],
   "legends": [],
@@ -118,28 +124,24 @@
           "trigger": "fix",
           "modify": "node",
           "values": "fix === true ? {fx: node.x, fy: node.y} : {fx: fix[0], fy: fix[1]}"
-        },
-        {
-          "trigger": "!fix",
-          "modify": "node",
-          "values": "{fx: null, fy: null}"
         }
       ],
       "encode": {
         "enter": {
-          "size": { "field": "eigen_centrality", "scale": "nodeRadius" },
           "fill": { "scale": "color", "field": "cluster_id" },
-          "stroke": { "value": "white" },
-          "tooltip": { "signal": "datum.tooltip" }
+          "stroke": { "value": "black" }
         },
-        "update": { "cursor": { "value": "pointer" } }
+        "update": {
+          "size": { "signal": "2 * nodeRadius * nodeRadius" },
+          "cursor": { "value": "pointer" }
+        }
       },
       "transform": [
         {
           "type": "force",
           "iterations": 300,
           "restart": { "signal": "restart" },
-          "static": false,
+          "static": { "signal": "static" },
           "signal": "force",
           "forces": [
             {
@@ -147,33 +149,29 @@
               "x": { "signal": "cx" },
               "y": { "signal": "cy" }
             },
-            {
-              "force": "collide",
-              "radius": {
-                "expr": "sqrt(scale('nodeRadius',datum.datum.eigen_centrality))/1.8"
-              }
-            },
+
+            { "force": "collide", "radius": { "signal": "nodeRadius" } },
             { "force": "nbody", "strength": { "signal": "nodeCharge" } },
             {
+              "description": "Uses link-data to find links between nodes constraining x and y of nodes.  Tranforms link-data so source and target are objects that include e.g. x and y coords",
               "force": "link",
-              "id": "datum.node_id",
               "links": "link-data",
-              "distance": {
-                "expr": "scale('edge_length_scale',datum.edge_betweenness)*linkDistance"
-              }
+              "distance": { "signal": "linkDistance" },
+              "id": "datum.node_id"
             }
           ]
         }
       ]
     },
     {
+      "description": "The force link transform will replace source and target with objects containing x and y coords.  We need to extract x and y to plot a path between them",
       "type": "path",
       "name": "edges",
       "from": { "data": "link-data" },
       "interactive": true,
       "encode": {
         "update": {
-          "stroke": { "scale": "link_color", "field": "edge_betweenness" },
+          "stroke": { "value": "black" },
           "tooltip": { "signal": "datum.tooltip" },
           "strokeWidth": { "value": 2 }
         }

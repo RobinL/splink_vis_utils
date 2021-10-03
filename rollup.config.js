@@ -1,5 +1,8 @@
 import json from "@rollup/plugin-json";
 import { terser } from "rollup-plugin-terser";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+
 export default {
   input: "src/index.js",
   output: [
@@ -8,12 +11,6 @@ export default {
       format: "umd",
       name: "splink_vis_utils",
     },
-    {
-      file: "dist/splink_vis_utils.min.js",
-      format: "umd",
-      name: "splink_vis_utils",
-      plugins: [terser()],
-    },
   ],
-  plugins: [json()],
+  plugins: [json(), nodeResolve(), terser(), commonjs()],
 };
