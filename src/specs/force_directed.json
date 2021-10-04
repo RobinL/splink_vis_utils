@@ -10,8 +10,8 @@
     },
     {
       "name": "nodeRadius",
-      "value": 20,
-      "bind": { "input": "range", "min": 1, "max": 50, "step": 1 }
+      "value": 1.0,
+      "bind": { "input": "range", "min": 0.2, "max": 4.0, "step": 0.1 }
     },
     {
       "name": "edge_click",
@@ -39,7 +39,7 @@
       "value": 894,
       "bind": { "input": "range", "min": 400, "max": 2000, "step": 50 }
     },
-    { "name": "static", "value": true, "bind": { "input": "checkbox" } },
+    { "name": "static", "value": false, "bind": { "input": "checkbox" } },
     {
       "description": "State variable for active node fix status.",
       "name": "fix",
@@ -87,29 +87,6 @@
       "type": "ordinal",
       "domain": { "data": "node-data", "field": "cluster_id" },
       "range": { "scheme": "category20c" }
-    },
-    {
-      "name": "link_colour",
-      "type": "linear",
-      "domain": { "data": "link-data", "field": "edge_betweenness" },
-      "range": { "scheme": "redyellowgreen" },
-      "reverse": true
-    },
-    {
-      "name": "link_thickness",
-      "type": "linear",
-      "domain": { "data": "link-data", "field": "edge_betweenness" },
-      "range": [0.5, 5],
-      "reverse": true
-    },
-    {
-      "name": "nodeRadius",
-      "type": "linear",
-      "nice": false,
-      "reverse": false,
-      "zero": true,
-      "domain": { "data": "node-data", "field": "eigen_centrality" },
-      "range": [100, 200]
     }
   ],
   "legends": [],
@@ -128,12 +105,12 @@
       ],
       "encode": {
         "enter": {
-          "fill": { "scale": "color", "field": "cluster_id" },
           "stroke": { "value": "black" }
         },
         "update": {
-          "size": { "signal": "2 * nodeRadius * nodeRadius" },
-          "cursor": { "value": "pointer" }
+          "size": { "value": 1000, "mult": { "signal": "nodeRadius" } },
+          "cursor": { "value": "pointer" },
+          "fill": { "scale": "color", "field": "cluster_id" }
         }
       },
       "transform": [
@@ -150,7 +127,10 @@
               "y": { "signal": "cy" }
             },
 
-            { "force": "collide", "radius": { "expr": "nodeRadius*2" } },
+            {
+              "force": "collide",
+              "radius": { "expr": "pow(1000*nodeRadius,0.5)" }
+            },
             { "force": "nbody", "strength": { "signal": "nodeCharge" } },
             {
               "description": "Uses link-data to find links between nodes constraining x and y of nodes.  Tranforms link-data so source and target are objects that include e.g. x and y coords",

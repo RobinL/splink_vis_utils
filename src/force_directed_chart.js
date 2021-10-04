@@ -108,11 +108,72 @@ class ForceDirectedChart {
     replace_in_list_or_push(force_transform.forces, "force", "link", new_force);
   }
 
-  set_node_radius_metric(node_metric_name) {}
+  set_node_radius_metric(node_metric_name, reverse = false) {
+    const new_node_radius_scale = {
+      name: "node_radius_scale",
+      type: "linear",
+      nice: false,
+      reverse: reverse,
+      domain: { data: "node-data", field: node_metric_name },
+      range: [400, 2000],
+    };
 
-  set_node_colour_metric(node_metric_name) {}
+    replace_in_list_or_push(
+      this.spec.scales,
+      "name",
+      "node_radius_scale",
+      new_node_radius_scale
+    );
 
-  spec() {}
+    let node_mark = find_obj_in_list(this.spec.marks, "name", "nodes");
+
+    node_mark.encode.update.size = {
+      scale: "node_radius_scale",
+      field: node_metric_name,
+      mult: { signal: "nodeRadius" },
+    };
+
+    let force_transform = find_obj_in_list(
+      node_mark.transform,
+      "type",
+      "force"
+    );
+    let force_collide = find_obj_in_list(
+      force_transform.forces,
+      "force",
+      "collide"
+    );
+    force_collide.radius.expr = `pow(scale('node_radius_scale',datum.datum.${node_metric_name})*nodeRadius,0.5)`;
+  }
+
+  set_node_colour_metric(
+    node_metric_name,
+    reverse = false,
+    scheme = "redyellowgreen"
+  ) {
+    const new_node_colour_scale = {
+      name: "node_colour_scale",
+      type: "linear",
+      nice: false,
+      reverse: reverse,
+      domain: { data: "node-data", field: node_metric_name },
+      range: { scheme: scheme },
+    };
+
+    replace_in_list_or_push(
+      this.spec.scales,
+      "name",
+      "node_colour_scale",
+      new_node_colour_scale
+    );
+
+    let node_mark = find_obj_in_list(this.spec.marks, "name", "nodes");
+
+    node_mark.encode.update.fill = {
+      scale: "node_colour_scale",
+      field: node_metric_name,
+    };
+  }
 }
 
 export { ForceDirectedChart };
