@@ -12,7 +12,4 @@ export { d } from "./bayes_factor_chart.js";
 
 export { get_waterfall_chart_data } from "./waterfall_data.js";
 
-export {
-  force_directed_spec,
-  set_edge_colour_metric,
-} from "./force_directed_chart.js";
+export { ForceDirectedChart } from "./force_directed_chart.js";

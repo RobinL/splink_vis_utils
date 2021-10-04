@@ -12,5 +12,5 @@ export default {
       name: "splink_vis_utils",
     },
   ],
-  plugins: [json(), nodeResolve(), terser(), commonjs()],
+  plugins: [json(), nodeResolve(), commonjs()],
 };
