@@ -105,7 +105,8 @@
       ],
       "encode": {
         "enter": {
-          "stroke": { "value": "black" }
+          "stroke": { "value": "black" },
+          "tooltip": { "signal": "datum" }
         },
         "update": {
           "size": { "value": 1000, "mult": { "signal": "nodeRadius" } },
@@ -137,7 +138,7 @@
               "force": "link",
               "links": "link-data",
               "distance": { "expr": "200*linkDistance" },
-              "id": "datum.node_id"
+              "id": "datum.__node_id"
             }
           ]
         }
@@ -152,7 +153,7 @@
       "encode": {
         "update": {
           "stroke": { "value": "black" },
-          "tooltip": { "signal": "datum.tooltip" },
+          "tooltip": { "signal": "datum" },
           "strokeWidth": { "value": 2 }
         }
       },
@@ -179,7 +180,7 @@
           "baseline": { "value": "middle" },
           "fontSize": { "value": 12 },
           "fontWeight": { "value": "bold" },
-          "text": { "field": "datum.node_id" }
+          "text": { "field": "datum.__node_id" }
         },
         "update": { "x": { "field": "x" }, "y": { "field": "y" } }
       }

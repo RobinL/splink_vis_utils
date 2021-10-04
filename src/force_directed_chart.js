@@ -92,7 +92,7 @@ class ForceDirectedChart {
 
     const new_force = {
       force: "link",
-      id: "datum.node_id",
+      id: "datum.__node_id",
       links: "link-data",
       distance: {
         expr: `scale('edge_length_scale',datum.${edge_metric_name})*linkDistance`,
