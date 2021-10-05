@@ -19,6 +19,26 @@ class SplinkSettings {
 
     return lookup;
   }
+
+  cols_used_by_model() {
+    const ccs = this.comparison_columns;
+    let cols_in_use = [];
+    ccs.forEach((cc) => {
+      if ("custom_name" in cc) {
+        cc["custom_columns_used"].forEach((col) => {
+          if (!cols_in_use.includes(col)) {
+            cols_in_use.push(col);
+          }
+        });
+      } else {
+        if (!cols_in_use.includes(cc["col_name"])) {
+          cols_in_use.push(cc["col_name"]);
+        }
+      }
+    });
+
+    return cols_in_use;
+  }
 }
 
 export { SplinkSettings };

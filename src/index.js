@@ -4,6 +4,9 @@ export { cloneDeep };
 import { Runtime, Inspector } from "@observablehq/runtime";
 export { Runtime, Inspector };
 
+import { select, table } from "@observablehq/inputs";
+export { select, table };
+
 import { select } from "@observablehq/inputs";
 export { select };
 
@@ -18,7 +21,7 @@ export {
   log2,
 } from "./match_weight.js";
 
-export { d } from "./bayes_factor_chart.js";
+// export { d } from "./bayes_factor_chart.js";
 
 export { get_waterfall_chart_data } from "./waterfall_data.js";
 
@@ -35,3 +38,5 @@ export {
 } from "./format_force_directed_data.js";
 
 export { get_waterfall_chart_spec } from "./waterfall_chart.js";
+
+export { node_row_to_table, edge_row_to_table } from "./row_to_table";

@@ -174,6 +174,12 @@ class ForceDirectedChart {
       field: node_metric_name,
     };
   }
+
+  remove_all_sliders() {
+    this.spec.signals.forEach((signal) => {
+      delete signal.bind;
+    });
+  }
 }
 
 export { ForceDirectedChart };
