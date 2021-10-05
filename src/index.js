@@ -1,5 +1,12 @@
 import cloneDeep from "lodash.clonedeep";
 export { cloneDeep };
+
+import { Runtime, Inspector } from "@observablehq/runtime";
+export { Runtime, Inspector };
+
+import define from "@robinl/to-embed-in-splink-outputs";
+export { define };
+
 export {
   bayes_factor_to_prob,
   prob_to_bayes_factor,
