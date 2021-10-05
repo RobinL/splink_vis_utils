@@ -27,6 +27,7 @@
   "type": "module",
   "dependencies": {
     "@observablehq/runtime": "^4.17.5",
+    "@robinl/to-embed-in-splink-outputs": "https://api.observablehq.com/d/5c0f40059131a129.tgz?v=3",
     "lodash.clonedeep": "^4.5.0"
   }
 }

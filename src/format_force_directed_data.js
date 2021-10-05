@@ -3,7 +3,7 @@ export function format_nodes_data_for_force_directed(
   splink_settings
 ) {
   // Create a __node_id field that uniquely identifies the row
-  debugger;
+
   if (splink_settings.link_type == "dedupe_only") {
     let c = splink_settings.unique_id_column_name;
     nodes_data.forEach(function (node) {
@@ -24,7 +24,6 @@ export function format_edges_data_for_force_directed(
   nodes_data,
   splink_settings
 ) {
-  debugger;
   if (splink_settings.link_type == "dedupe_only") {
     let c = splink_settings.unique_id_column_name;
     nodes_data.forEach(function (node) {
