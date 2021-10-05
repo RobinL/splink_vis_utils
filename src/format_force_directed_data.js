@@ -41,3 +41,29 @@ export function format_edges_data_for_force_directed(
 
   return nodes_data;
 }
+
+export function get_unique_cluster_ids_from_nodes_data(
+  nodes_data,
+  cluster_field
+) {
+  let cluster_ids = nodes_data.map((d) => d[cluster_field]);
+  return [...new Set(cluster_ids)];
+}
+
+export function filter_nodes_with_cluster_id(
+  nodes_data,
+  cluster_field,
+  selected_cluster_id
+) {
+  return nodes_data.filter((d) => d[cluster_field] == selected_cluster_id);
+}
+
+export function filter_edges_with_cluster_id(
+  edges_data,
+  cluster_field,
+  selected_cluster_id
+) {
+  return edges_data
+    .filter((d) => d[`${cluster_field}_l`] == selected_cluster_id)
+    .filter((d) => d[`${cluster_field}_r`] == selected_cluster_id);
+}
