@@ -1,5 +1,9 @@
 import cloneDeep from "lodash.clonedeep";
 export { cloneDeep };
+
+import { Runtime, Inspector } from "@observablehq/runtime";
+export { Runtime, Inspector };
+
 export {
   bayes_factor_to_prob,
   prob_to_bayes_factor,
