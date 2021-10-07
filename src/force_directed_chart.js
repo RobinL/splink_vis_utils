@@ -25,7 +25,8 @@ class ForceDirectedChart {
   set_edge_colour_metric(
     edge_metric_name,
     reverse = false,
-    scheme = "redyellowgreen"
+    scheme = "redyellowgreen",
+    explicit_domain = null
   ) {
     const new_link_scale = {
       name: "link_colour",
@@ -34,6 +35,9 @@ class ForceDirectedChart {
       range: { scheme: scheme },
       reverse: reverse,
     };
+    if (explicit_domain != null) {
+      new_link_scale.domain = explicit_domain;
+    }
 
     replace_in_list_or_push(
       this.spec.scales,

@@ -4,11 +4,8 @@ export { cloneDeep };
 import { Runtime, Inspector } from "@observablehq/runtime";
 export { Runtime, Inspector };
 
-import { select, table } from "@observablehq/inputs";
-export { select, table };
-
-import { select } from "@observablehq/inputs";
-export { select };
+import { select, table, checkbox, range } from "@observablehq/inputs";
+export { select, table, checkbox, range };
 
 import define from "@robinl/to-embed-in-splink-outputs";
 export { define };
