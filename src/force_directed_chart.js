@@ -10,6 +10,7 @@ class ForceDirectedChart {
     this.spec = base_spec_cp;
     this.set_force_directed_node_data(nodes_data);
     this.set_force_directed_edge_data(links_data);
+    this.nodes_data = nodes_data;
   }
 
   set_force_directed_node_data(data) {
@@ -25,19 +26,23 @@ class ForceDirectedChart {
   set_edge_colour_metric(
     edge_metric_name,
     reverse = false,
-    scheme = "redyellowgreen",
-    explicit_domain = null
+    domain = null,
+    range = null
   ) {
+    if (domain == null) {
+      domain = { data: "link-data", field: edge_metric_name };
+    }
+
+    if (range == null) {
+      range = { scheme: "redyellowgreen" };
+    }
     const new_link_scale = {
       name: "link_colour",
       type: "linear",
-      domain: { data: "link-data", field: edge_metric_name },
-      range: { scheme: scheme },
+      domain: domain,
+      range: range,
       reverse: reverse,
     };
-    if (explicit_domain != null) {
-      new_link_scale.domain = explicit_domain;
-    }
 
     replace_in_list_or_push(
       this.spec.scales,
@@ -112,29 +117,42 @@ class ForceDirectedChart {
     replace_in_list_or_push(force_transform.forces, "force", "link", new_force);
   }
 
-  set_node_radius_metric(node_metric_name, reverse = false) {
-    const new_node_radius_scale = {
-      name: "node_radius_scale",
+  set_node_area_metric(
+    node_metric_name,
+    reverse = false,
+    domain = null,
+    range = null
+  ) {
+    if (domain == null) {
+      domain = { data: "node-data", field: node_metric_name };
+    }
+
+    if (range == null) {
+      range = [400, 2000];
+    }
+
+    const new_node_area_scale = {
+      name: "node_area_scale",
       type: "linear",
       nice: false,
       reverse: reverse,
-      domain: { data: "node-data", field: node_metric_name },
-      range: [400, 2000],
+      domain: domain,
+      range: range,
     };
 
     replace_in_list_or_push(
       this.spec.scales,
       "name",
-      "node_radius_scale",
-      new_node_radius_scale
+      "node_area_scale",
+      new_node_area_scale
     );
 
     let node_mark = find_obj_in_list(this.spec.marks, "name", "nodes");
 
     node_mark.encode.update.size = {
-      scale: "node_radius_scale",
+      scale: "node_area_scale",
       field: node_metric_name,
-      mult: { signal: "nodeRadius" },
+      mult: { signal: "nodeArea" },
     };
 
     let force_transform = find_obj_in_list(
@@ -147,7 +165,7 @@ class ForceDirectedChart {
       "force",
       "collide"
     );
-    force_collide.radius.expr = `pow(scale('node_radius_scale',datum.datum.${node_metric_name})*nodeRadius,0.5)`;
+    force_collide.radius.expr = `pow(scale('node_area_scale',datum.datum.${node_metric_name})*nodeArea,0.5)`;
   }
 
   set_node_colour_metric(
@@ -177,6 +195,24 @@ class ForceDirectedChart {
       scale: "node_colour_scale",
       field: node_metric_name,
     };
+  }
+
+  set_height_from_nodes_data() {
+    const min_height = 200;
+    const node_height = 100;
+    const num_nodes = this.nodes_data.length;
+    const sqrt_nodes = Math.sqrt(num_nodes);
+    let height = sqrt_nodes * node_height;
+    height = height + 20;
+    height = Math.max(200, height);
+
+    let height_signal = find_obj_in_list(
+      this.spec.signals,
+      "name",
+      "vis_height"
+    );
+
+    height_signal.value = height;
   }
 
   remove_all_sliders() {

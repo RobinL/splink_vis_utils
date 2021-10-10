@@ -1,4 +1,4 @@
-import { table } from "@observablehq/inputs";
+import { table } from "./table.js";
 
 export function node_row_to_table(node_as_dict) {
   return table([node_as_dict], { layout: "auto" });

@@ -4,8 +4,8 @@ export { cloneDeep };
 import { Runtime, Inspector } from "@observablehq/runtime";
 export { Runtime, Inspector };
 
-import { select, table, checkbox, range } from "@observablehq/inputs";
-export { select, table, checkbox, range };
+import { select, checkbox, range } from "@observablehq/inputs";
+export { select, checkbox, range };
 
 import define from "@robinl/to-embed-in-splink-outputs";
 export { define };
@@ -36,4 +36,10 @@ export {
 
 export { get_waterfall_chart_spec } from "./waterfall_chart.js";
 
-export { node_row_to_table, edge_row_to_table } from "./row_to_table";
+export { node_row_to_table, edge_row_to_table } from "./row_to_table.js";
+
+export { table } from "./table.js";
+
+export { detect_node_metrics, detect_edge_metrics } from "./detect_cols.js";
+
+export { metric_vis_args } from "./metric_args.js";
