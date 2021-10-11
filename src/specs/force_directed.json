@@ -9,9 +9,24 @@
       "on": [{ "events": "@nodes:click", "update": "datum" }]
     },
     {
-      "name": "nodeArea",
+      "name": "nodeRadius",
       "value": 1.0,
       "bind": { "input": "range", "min": 0.2, "max": 4.0, "step": 0.1 }
+    },
+    {
+      "name": "nodeCollideStrength",
+      "value": 1.0,
+      "bind": { "input": "range", "min": 0.2, "max": 4.0, "step": 0.1 }
+    },
+    {
+      "name": "nodeCollideRadius",
+      "value": 1.0,
+      "bind": { "input": "range", "min": 0.2, "max": 4.0, "step": 0.1 }
+    },
+    {
+      "name": "linkStrength",
+      "value": 0.2,
+      "bind": { "input": "range", "min": 0.0, "max": 1.0, "step": 0.01 }
     },
     {
       "name": "edge_click",
@@ -22,12 +37,12 @@
     {
       "name": "nodeCharge",
       "value": -3,
-      "bind": { "input": "range", "min": -100, "max": 100, "step": 1 }
+      "bind": { "input": "range", "min": -500, "max": 500, "step": 1 }
     },
     {
       "name": "linkDistance",
-      "value": 0.5,
-      "bind": { "input": "range", "min": 0.1, "max": 1, "step": 0.01 }
+      "value": 1.0,
+      "bind": { "input": "range", "min": 0.1, "max": 2, "step": 0.1 }
     },
     {
       "name": "vis_height",
@@ -106,10 +121,10 @@
       "encode": {
         "enter": {
           "stroke": { "value": "black" },
-          "tooltip": { "signal": "datum" }
+          "tooltip": { "signal": "datum.tooltip" }
         },
         "update": {
-          "size": { "value": 1000, "mult": { "signal": "nodeArea" } },
+          "size": { "value": 1000, "mult": { "signal": "nodeRadius" } },
           "cursor": { "value": "pointer" },
           "fill": { "scale": "color", "field": "cluster_id" }
         }
@@ -130,7 +145,10 @@
 
             {
               "force": "collide",
-              "radius": { "expr": "pow(1000*nodeArea,0.5)" }
+              "radius": {
+                "expr": "pow(1000*nodeRadius,0.5)*nodeCollideStrength*nodeCollideRadius"
+              },
+              "strength": { "signal": "nodeCollideStrength" }
             },
             { "force": "nbody", "strength": { "signal": "nodeCharge" } },
             {
@@ -138,7 +156,8 @@
               "force": "link",
               "links": "link-data",
               "distance": { "expr": "200*linkDistance" },
-              "id": "datum.__node_id"
+              "id": "datum.__node_id",
+              "strength": { "signal": "linkStrength" }
             }
           ]
         }
@@ -153,7 +172,7 @@
       "encode": {
         "update": {
           "stroke": { "value": "black" },
-          "tooltip": { "signal": "datum" },
+          "tooltip": { "signal": "datum.tooltip" },
           "strokeWidth": { "value": 2 }
         }
       },

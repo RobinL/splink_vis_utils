@@ -24,7 +24,7 @@ export { get_waterfall_chart_data } from "./waterfall_data.js";
 
 export { ForceDirectedChart } from "./force_directed_chart.js";
 
-export { SplinkSettings } from "./splink_settings.js";
+export { SplinkSettings, ComparisonColumn } from "./splink_settings.js";
 
 export {
   format_nodes_data_for_force_directed,
@@ -36,7 +36,11 @@ export {
 
 export { get_waterfall_chart_spec } from "./waterfall_chart.js";
 
-export { node_row_to_table, edge_row_to_table } from "./row_to_table.js";
+export {
+  node_row_to_table,
+  edge_row_to_table,
+  comparison_column_table,
+} from "./row_to_table.js";
 
 export { table } from "./table.js";
 

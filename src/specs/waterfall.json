@@ -4,6 +4,7 @@
     "text": "Bayes factor intuition chart",
     "subtitle": "How each comparison column contributes to the final match score"
   },
+
   "transform": [
     { "filter": "(datum.bayes_factor !== 1.0)" },
     {

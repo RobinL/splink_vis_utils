@@ -36,7 +36,7 @@ export const metric_vis_args = {
       node_metric_name: "eigen_centrality",
       reverse: false,
       domain: { data: "node-data", field: "eigen_centrality" },
-      range: [200, 1000],
+      range: [100, 2000],
     },
   },
 };

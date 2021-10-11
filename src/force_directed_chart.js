@@ -199,12 +199,12 @@ class ForceDirectedChart {
 
   set_height_from_nodes_data() {
     const min_height = 200;
-    const node_height = 100;
+    const node_height = 150;
     const num_nodes = this.nodes_data.length;
     const sqrt_nodes = Math.sqrt(num_nodes);
     let height = sqrt_nodes * node_height;
     height = height + 20;
-    height = Math.max(200, height);
+    height = Math.max(min_height, height);
 
     let height_signal = find_obj_in_list(
       this.spec.signals,

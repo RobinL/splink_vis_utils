@@ -13,8 +13,8 @@ function get_waterfall_row_single_column(
   let key = gamma_key;
   let gamma_value = row[key];
   let col_name = key.replace("gamma_", "");
-  let cc_lookup = splink_settings.comparison_column_lookup();
-  let this_cc = cc_lookup[col_name];
+
+  let this_cc = splink_settings.get_col_by_name(col_name);
 
   let value_l = row[col_name + "_l"];
   let value_r = row[col_name + "_r"];
@@ -24,8 +24,8 @@ function get_waterfall_row_single_column(
     u_probability = 0.5;
     m_probability = 0.5;
   } else {
-    u_probability = this_cc["u_probabilities"][gamma_value];
-    m_probability = this_cc["m_probabilities"][gamma_value];
+    u_probability = this_cc.u_probabilities[gamma_value];
+    m_probability = this_cc.m_probabilities[gamma_value];
 
     if (value_l == value_r) {
       if (col_name in term_freqs) {
@@ -69,7 +69,9 @@ function get_waterfall_data_comparison_columns(
 
 function get_waterfall_data_lambda_row(splink_settings) {
   let row = {
-    bayes_factor: prob_to_bayes_factor(splink_settings.proportion_of_matches),
+    bayes_factor: prob_to_bayes_factor(
+      splink_settings.settings_dict.proportion_of_matches
+    ),
     column_name: "Prior",
     gamma_column_name: "",
     gamma_index: "",
@@ -77,7 +79,7 @@ function get_waterfall_data_lambda_row(splink_settings) {
     level_name: null,
 
     log2_bayes_factor: prob_to_log2_bayes_factor(
-      splink_settings.proportion_of_matches
+      splink_settings.settings_dict.proportion_of_matches
     ),
     m_probability: null,
 
@@ -90,7 +92,7 @@ function get_waterfall_data_lambda_row(splink_settings) {
   return row;
 }
 
-function get_waterfall_data_final_row(splink_settings) {
+function get_waterfall_data_final_row() {
   let row = {
     bayes_factor: null,
     column_name: "Final score",
