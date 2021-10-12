@@ -12,8 +12,8 @@ export const metric_vis_args = {
       domain: [0, 1],
       range: { scheme: "redyellowgreen" },
     },
-    weight: {
-      edge_metric_name: "weight",
+    match_weight: {
+      edge_metric_name: "match_weight",
       reverse: false,
       domain: [-20, 20],
       range: { scheme: "redyellowgreen" },

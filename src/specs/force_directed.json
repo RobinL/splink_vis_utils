@@ -51,8 +51,8 @@
     },
     {
       "name": "vis_width",
-      "value": 894,
-      "bind": { "input": "range", "min": 400, "max": 2000, "step": 50 }
+      "value": 1000,
+      "bind": { "input": "range", "min": 400, "max": 2000, "step": 20 }
     },
     { "name": "static", "value": false, "bind": { "input": "checkbox" } },
     {

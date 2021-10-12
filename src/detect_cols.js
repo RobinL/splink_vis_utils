@@ -17,8 +17,8 @@ export function detect_edge_metrics(data) {
     node_metrics.set("Match probability", "match_probability");
   }
 
-  if (keys.includes("weight")) {
-    node_metrics.set("Match weight (log2 bayes factor)", "weight");
+  if (keys.includes("match_weight")) {
+    node_metrics.set("Match weight (log2 bayes factor)", "match_weight");
   }
 
   if (keys.includes("tf_adjusted_match_prob")) {

@@ -152,7 +152,7 @@ class ForceDirectedChart {
     node_mark.encode.update.size = {
       scale: "node_area_scale",
       field: node_metric_name,
-      mult: { signal: "nodeArea" },
+      mult: { signal: "nodeRadius" },
     };
 
     let force_transform = find_obj_in_list(
@@ -165,7 +165,7 @@ class ForceDirectedChart {
       "force",
       "collide"
     );
-    force_collide.radius.expr = `pow(scale('node_area_scale',datum.datum.${node_metric_name})*nodeArea,0.5)`;
+    force_collide.radius.expr = `pow(scale('node_area_scale',datum.datum.${node_metric_name})*nodeRadius,0.5)`;
   }
 
   set_node_colour_metric(
@@ -213,6 +213,11 @@ class ForceDirectedChart {
     );
 
     height_signal.value = height;
+  }
+
+  set_starting_width(new_width) {
+    let width_signal = find_obj_in_list(this.spec.signals, "name", "vis_width");
+    width_signal.value = new_width;
   }
 
   remove_all_sliders() {

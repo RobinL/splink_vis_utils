@@ -21,7 +21,6 @@ export function format_nodes_data_for_force_directed(
 
   nodes_data.forEach(function (node) {
     let tooltip = {};
-    debugger;
     cols_for_tooltip.forEach(function (col) {
       tooltip[col] = node[col];
     });
@@ -53,15 +52,25 @@ export function format_edges_data_for_force_directed(
   // Create a tooltip field that contains only the info used by the model
   let cols_for_tooltip = splink_settings.cols_used_by_model_inc_add_to_retain;
 
+  let additional_cols = [
+    "match_probability",
+    "tf_adjusted_match_prob",
+    "match_weight",
+  ];
+
+  additional_cols = additional_cols.filter((col) => {
+    return col in edge_data[0];
+  });
+
   edge_data.forEach(function (edge) {
     let tooltip = {};
-    debugger;
     cols_for_tooltip.forEach(function (col) {
       if (edge[`${col}_l`] && edge[`${col}_r`]) {
         tooltip[`${col}_l`] = edge[`${col}_l`];
         tooltip[`${col}_r`] = edge[`${col}_r`];
       }
     });
+    additional_cols.forEach((d) => (tooltip[d] = edge[d]));
     edge.tooltip = tooltip;
   });
 
