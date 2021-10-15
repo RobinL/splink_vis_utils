@@ -1,8 +1,22 @@
 import { SplinkSettings } from "./splink_settings.js";
 import { table } from "./table.js";
 
-export function node_row_to_table(node_as_dict) {
-  return table([node_as_dict], { layout: "auto" });
+export function node_row_to_table(node_as_dict, splink_settings) {
+  const first_cols = splink_settings.cols_used_by_model_inc_add_to_retain;
+  let all_cols = Object.keys(node_as_dict);
+
+  all_cols = all_cols.filter(function (el) {
+    return !first_cols.includes(el);
+  });
+
+  let cols = first_cols.concat(all_cols);
+
+  let d2 = {};
+  cols.forEach((c) => {
+    d2[c] = node_as_dict[c];
+  });
+
+  return table([d2], { layout: "auto" });
 }
 
 export function edge_row_to_table(edge_as_dict, splink_settings) {
@@ -43,25 +57,6 @@ export function edge_row_to_table(edge_as_dict, splink_settings) {
   return table(table_data, { layout: "auto" });
 }
 
-// export function comparison_column_table(edge_as_dict, splink_settings) {
-//   // let splink_settings = new SplinkSettings
-//   let ccs = splink_settings.comparison_columns;
-
-//   let row_left = {};
-//   let row_right = {};
-//   let row_case = {};
-
-//   ccs.forEach((cc) => {
-//     let expr = cc.case_expression_from_row(edge_as_dict);
-//     let data = cc.concat_data_from_row(edge_as_dict);
-
-//     row_left[cc.name] = data["left"];
-//     row_right[cc.name] = data["right"];
-//     row_case[cc.name] = expr;
-//   });
-//   return table([row_left, row_right, row_case], { layout: "auto" });
-// }
-
 export function comparison_column_table(edge_as_dict, splink_settings) {
   // let splink_settings = new SplinkSettings
   let ccs = splink_settings.comparison_columns;
@@ -82,5 +77,11 @@ export function comparison_column_table(edge_as_dict, splink_settings) {
 
     rows.push(this_row);
   });
+  return table(rows, { layout: "auto" });
+}
+
+export function single_cluster_table(cluster_as_dict) {
+  let rows = [];
+  rows.push(cluster_as_dict);
   return table(rows, { layout: "auto" });
 }

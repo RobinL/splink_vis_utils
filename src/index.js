@@ -40,10 +40,17 @@ export {
   node_row_to_table,
   edge_row_to_table,
   comparison_column_table,
+  single_cluster_table,
 } from "./row_to_table.js";
 
 export { table } from "./table.js";
 
-export { detect_node_metrics, detect_edge_metrics } from "./detect_cols.js";
+export {
+  detect_node_size_metrics,
+  detect_node_colour_metrics,
+  detect_edge_colour_metrics,
+} from "./detect_cols.js";
 
 export { metric_vis_args } from "./metric_args.js";
+
+export { node_rows_to_table } from "./node_rows_to_table.js";

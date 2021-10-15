@@ -22,7 +22,9 @@ export function format_nodes_data_for_force_directed(
   nodes_data.forEach(function (node) {
     let tooltip = {};
     cols_for_tooltip.forEach(function (col) {
-      tooltip[col] = node[col];
+      if (node[col] != null) {
+        tooltip[col] = node[col];
+      }
     });
     node.tooltip = tooltip;
   });

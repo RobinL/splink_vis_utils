@@ -30,6 +30,12 @@ export const metric_vis_args = {
       domain: [0, 1],
       range: { scheme: "redyellowgreen" },
     },
+    is_false_positive: {
+      edge_metric_name: "is_false_positive",
+      reverse: true,
+      domain: [0, 1],
+      range: { scheme: "redyellowgreen" },
+    },
   },
   node_size: {
     eigen_centrality: {
@@ -37,6 +43,20 @@ export const metric_vis_args = {
       reverse: false,
       domain: { data: "node-data", field: "eigen_centrality" },
       range: [100, 2000],
+    },
+  },
+  node_colour: {
+    ground_truth_cluster: {
+      node_metric_name: "ground_truth_cluster",
+
+      domain: { data: "node-data", field: "ground_truth_cluster" },
+      range: { scheme: "category10" },
+    },
+    source_dataset: {
+      node_metric_name: "source_dataset",
+
+      domain: { data: "node-data", field: "source_dataset" },
+      range: { scheme: "category10" },
     },
   },
 };

@@ -170,16 +170,26 @@ class ForceDirectedChart {
 
   set_node_colour_metric(
     node_metric_name,
-    reverse = false,
-    scheme = "redyellowgreen"
+
+    domain = null,
+    range = null
   ) {
+    if (domain == null) {
+      domain = { data: "node-data", field: node_metric_name };
+    }
+
+    if (range == null) {
+      range = {
+        scheme: "category10",
+      };
+    }
+
     const new_node_colour_scale = {
       name: "node_colour_scale",
-      type: "linear",
-      nice: false,
-      reverse: reverse,
-      domain: { data: "node-data", field: node_metric_name },
-      range: { scheme: scheme },
+      type: "ordinal",
+
+      domain: domain,
+      range: range,
     };
 
     replace_in_list_or_push(
