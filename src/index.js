@@ -7,8 +7,11 @@ export { Runtime, Inspector };
 import { select, checkbox, range } from "@observablehq/inputs";
 export { select, checkbox, range };
 
-import define from "@robinl/to-embed-in-splink-outputs";
-export { define };
+import define_cluster from "@robinl/to-embed-in-splink-outputs";
+export { define_cluster };
+
+import define_comparison from "c43e4e0aeb54d263";
+export { define_comparison };
 
 export {
   bayes_factor_to_prob,
@@ -17,8 +20,6 @@ export {
   log2_bayes_factor_to_prob,
   log2,
 } from "./match_weight.js";
-
-// export { d } from "./bayes_factor_chart.js";
 
 export { get_waterfall_chart_data } from "./waterfall_data.js";
 
@@ -54,3 +55,5 @@ export {
 export { metric_vis_args } from "./metric_args.js";
 
 export { node_rows_to_table } from "./node_rows_to_table.js";
+
+export { get_gamma_distribution_chart } from "./gamma_distribution_chart.js";
