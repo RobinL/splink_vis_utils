@@ -29,6 +29,7 @@
           },
 
           { "field": "match_weight", "type": "quantitative", "format": ",.2f" },
+
           {
             "field": "proportion_of_comparisons",
             "type": "quantitative",
@@ -84,7 +85,12 @@
             "y": {
               "field": "gam_name",
               "type": "nominal",
-              "title": ""
+              "title": "",
+              "sort": {
+                "field": "gam_key_count",
+                "op": "sum",
+                "order": "ascending"
+              }
             },
             "x": {
               "field": "gam_concat",
@@ -133,7 +139,12 @@
             "y": {
               "field": "gam_name",
               "type": "nominal",
-              "title": ""
+              "title": "",
+              "sort": {
+                "field": "gam_key_count",
+                "op": "sum",
+                "order": "ascending"
+              }
             },
             "x": {
               "field": "gam_concat",
