@@ -29,6 +29,7 @@
           },
 
           { "field": "match_weight", "type": "quantitative", "format": ",.2f" },
+          { "field": "sum_matches", "type": "quantitative", "format": ",.1f" },
 
           {
             "field": "proportion_of_comparisons",
