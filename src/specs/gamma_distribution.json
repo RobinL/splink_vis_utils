@@ -1,0 +1,216 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "config": {
+    "view": {
+      "continuousHeight": 300,
+      "continuousWidth": 400
+    }
+  },
+  "data": { "values": [] },
+  "vconcat": [
+    {
+      "encoding": {
+        "color": {
+          "field": "match_probability",
+          "legend": { "title": "" },
+          "scale": {
+            "domain": [0, 0.5, 1],
+            "range": ["red", "orange", "green"]
+          },
+          "type": "quantitative"
+        },
+        "tooltip": [
+          { "field": "gam_concat", "type": "nominal" },
+          { "field": "count", "type": "quantitative" },
+          {
+            "field": "match_probability",
+            "type": "quantitative",
+            "format": ",.1%"
+          },
+
+          { "field": "match_weight", "type": "quantitative", "format": ",.2f" },
+          { "field": "sum_matches", "type": "quantitative", "format": ",.1f" },
+
+          {
+            "field": "proportion_of_comparisons",
+            "type": "quantitative",
+            "format": ",.1%"
+          },
+          {
+            "field": "cumulative_comparisons",
+            "type": "quantitative",
+            "format": ",.1%"
+          }
+        ],
+        "x": {
+          "field": "gam_concat",
+          "sort": {
+            "field": "match_weight",
+            "op": "sum",
+            "order": "ascending"
+          },
+          "title": "",
+          "type": "nominal",
+          "axis": { "labels": false, "ticks": 0, "grid": false }
+        },
+        "y": {
+          "field": "count",
+          "scale": { "constant": 40, "type": "symlog" },
+          "title": "count",
+          "type": "quantitative",
+          "title": "Frequency count of comparison vector"
+        }
+      },
+      "mark": { "type": "bar", "clip": true },
+      "title": {
+        "subtitle": "Click bars on upmost chart to display example. Brush bottom chart to zoom. ",
+        "text": "Count of comparison vector values"
+      },
+      "width": 1000,
+      "transform": [{ "filter": { "param": "brush" } }],
+      "selection": {
+        "gam_concat_signal": { "type": "single", "encodings": ["x"] }
+      }
+    },
+    {
+      "layer": [
+        {
+          "data": {
+            "values": []
+          },
+          "mark": "rect",
+          "width": 1000,
+          "height": { "step": 10 },
+          "transform": [{ "filter": { "param": "brush" } }],
+          "encoding": {
+            "y": {
+              "field": "gam_name",
+              "type": "nominal",
+              "title": "",
+              "sort": {
+                "field": "gam_key_count",
+                "op": "sum",
+                "order": "ascending"
+              }
+            },
+            "x": {
+              "field": "gam_concat",
+              "type": "ordinal",
+              "sort": {
+                "field": "gamma_concat_id",
+                "op": "sum",
+                "order": "ascending"
+              },
+              "axis": {
+                "labels": false,
+                "ticks": 0,
+                "grid": false
+              },
+              "title": ""
+            },
+            "color": {
+              "field": "gam_value_norm",
+              "legend": { "title": "" },
+              "type": "quantitative",
+              "scale": {
+                "domain": [0, 0.5, 1],
+                "range": ["red", "orange", "green"]
+              },
+              "legend": { "title": "" }
+            },
+            "tooltip": [
+              { "field": "gam_name", "type": "nominal" },
+              {
+                "field": "gam_value",
+                "type": "quantitative"
+              }
+            ]
+          }
+        },
+        {
+          "data": {
+            "values": []
+          },
+          "mark": { "type": "text", "fontSize": 8 },
+          "width": 1000,
+          "height": { "step": 10 },
+
+          "transform": [{ "filter": { "param": "brush" } }],
+          "encoding": {
+            "y": {
+              "field": "gam_name",
+              "type": "nominal",
+              "title": "",
+              "sort": {
+                "field": "gam_key_count",
+                "op": "sum",
+                "order": "ascending"
+              }
+            },
+            "x": {
+              "field": "gam_concat",
+              "type": "ordinal",
+              "sort": {
+                "field": "gamma_concat_id",
+                "op": "sum",
+                "order": "ascending"
+              },
+              "axis": {
+                "labels": false,
+                "ticks": 0,
+                "grid": false
+              },
+              "title": ""
+            },
+            "text": {
+              "field": "gam_value"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "encoding": {
+        "color": {
+          "field": "match_probability",
+          "legend": { "title": "" },
+          "scale": {
+            "domain": [0, 0.5, 1],
+            "range": ["red", "orange", "green"]
+          },
+          "type": "quantitative"
+        },
+        "x": {
+          "field": "gam_concat",
+          "sort": {
+            "field": "match_weight",
+            "op": "sum",
+            "order": "ascending"
+          },
+          "title": "Comparison vector value.  (Brush bottom chart to zoom. Click to reset.)",
+          "type": "nominal",
+          "axis": { "labels": false, "ticks": 0, "grid": false }
+        },
+        "y": {
+          "field": "count",
+          "scale": { "constant": 1, "type": "symlog" },
+          "title": "count",
+          "type": "quantitative",
+          "axis": { "tickCount": 0, "grid": false },
+          "title": ""
+        }
+      },
+      "mark": { "type": "bar", "clip": true },
+      "title": { "text": "" },
+
+      "width": 1000,
+      "height": 40,
+      "params": [
+        {
+          "name": "brush",
+          "select": { "type": "interval", "encodings": ["x"] }
+        }
+      ]
+    }
+  ]
+}

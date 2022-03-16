@@ -61,7 +61,7 @@ function get_waterfall_data_comparison_columns(
   term_freqs
 ) {
   let keys = Object.keys(row);
-  keys = keys.filter((key) => key.includes("gamma_"));
+  keys = keys.filter((key) => key.startsWith("gamma_"));
   return keys.map((gamma_key) =>
     get_waterfall_row_single_column(gamma_key, row, splink_settings, term_freqs)
   );
