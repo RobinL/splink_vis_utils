@@ -1,18 +1,10 @@
-class ComparisonColumn {
+class Comparison {
   constructor(cc) {
     this.original_dict = cc;
   }
 
   get name() {
-    if (this.is_custom_column) {
-      return this.original_dict["custom_name"];
-    } else {
-      return this.original_dict["col_name"];
-    }
-  }
-
-  get is_custom_column() {
-    return "custom_name" in this.original_dict;
+    return this.original_dict["column_name"];
   }
 
   get columns_used() {
@@ -102,10 +94,10 @@ class SplinkSettings {
     this.settings_dict = s;
   }
 
-  get comparison_columns() {
-    let ccs = this.settings_dict["comparison_columns"];
-    return ccs.map((d) => {
-      return new ComparisonColumn(d);
+  get comparisons() {
+    let comparisons = this.settings_dict["comparisons"];
+    return comparisons.map((d) => {
+      return new Comparison(d);
     });
   }
 
@@ -163,7 +155,7 @@ class SplinkSettings {
   }
 }
 
-export { SplinkSettings, ComparisonColumn };
+export { SplinkSettings, Comparison };
 
 function parse_case_expression(case_expr) {
   const case_regex = /when[\s\S]+?then[\s\S]+?(\-?[012345678])/gi;
