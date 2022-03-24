@@ -15,18 +15,32 @@ class Comparison {
     return this.original_dict["input_columns_used_by_case_statement"];
   }
 
-  get column_case_expression_lookup() {
+  // get column_case_expression_lookup() {
+  //   let lookup = {};
+  //   let comparison_levels = this.original_dict["comparison_levels"];
+  //   comparison_levels.forEach((d) => {
+  //     lookup[d["comparison_vector_value"]] = d["sql_condition"];
+  //   });
+
+  //   return lookup;
+  // }
+
+  get comparison_level_lookup() {
     let lookup = {};
     let comparison_levels = this.original_dict["comparison_levels"];
     comparison_levels.forEach((d) => {
-      lookup[d["comparison_vector_value"]] = d["sql_condition"];
+      lookup[d["comparison_vector_value"]] = d;
     });
 
     return lookup;
   }
 
   get_case_expression_for_level(level) {
-    return this.column_case_expression_lookup[level];
+    return this.get_comparison_level(level)["sql_condition"];
+  }
+
+  get_comparison_level(comparison_vector_value) {
+    return this.comparison_level_lookup[comparison_vector_value];
   }
 
   get m_probabilities() {

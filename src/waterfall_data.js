@@ -4,38 +4,18 @@ import {
   log2,
 } from "./match_weight.js";
 
-function get_waterfall_row_single_column(
-  gamma_key,
-  row,
-  splink_settings,
-  term_freqs
-) {
+function get_waterfall_row_single_column(gamma_key, row, splink_settings) {
   let key = gamma_key;
   let gamma_value = row[key];
   let col_name = key.replace("gamma_", "");
 
   let this_cc = splink_settings.get_col_by_name(col_name);
+  let this_cl = this_cc.get_comparison_level(gamma_value);
 
   let value_l = row[col_name + "_l"];
   let value_r = row[col_name + "_r"];
 
-  let u_probability, m_probability;
-  if (gamma_value == -1) {
-    u_probability = 0.5;
-    m_probability = 0.5;
-  } else {
-    u_probability = this_cc.u_probabilities[gamma_value];
-    m_probability = this_cc.m_probabilities[gamma_value];
-
-    if (value_l == value_r) {
-      if (col_name in term_freqs) {
-        let tfs = term_freqs[col_name];
-        u_probability = tfs[value_l] || u_probability;
-      }
-    }
-  }
-
-  let bayes_factor = m_probability / u_probability;
+  let bayes_factor = row["bf_" + col_name];
 
   return {
     bayes_factor: bayes_factor,
@@ -46,12 +26,13 @@ function get_waterfall_row_single_column(
     level_name: "level_" + gamma_value,
 
     log2_bayes_factor: log2(bayes_factor),
-    m_probability: m_probability,
+    m_probability: this_cl["m_probability"],
 
-    num_levels: null,
-    u_probability: u_probability,
+    num_levels: this_cc.num_levels,
+    u_probability: this_cl["u_probability"],
     value_l: value_l,
     value_r: value_r,
+    sql_condition: this_cl.sql_condition,
   };
 }
 

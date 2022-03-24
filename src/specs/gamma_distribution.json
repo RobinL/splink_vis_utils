@@ -56,7 +56,6 @@
         "y": {
           "field": "count_rows_in_comparison_vector_group",
           "scale": { "constant": 40, "type": "symlog" },
-          "title": "count",
           "type": "quantitative",
           "title": "Frequency count of comparison vector"
         }
