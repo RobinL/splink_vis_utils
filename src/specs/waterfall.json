@@ -96,10 +96,11 @@
                 "field": "gamma_index",
                 "title": "Gamma level"
               },
+
               {
                 "type": "nominal",
-                "field": "max_gamma_index",
-                "title": "Max gamma level"
+                "field": "sql_condition",
+                "title": "SQL condition"
               },
               {
                 "type": "quantitative",
@@ -111,13 +112,13 @@
                 "type": "quantitative",
                 "field": "log2_bayes_factor",
                 "format": ".3r",
-                "title": "log2(Bayes factor)"
+                "title": "Match weight"
               },
               {
                 "type": "quantitative",
                 "field": "prob",
                 "format": ".3r",
-                "title": "Adjusted match score"
+                "title": "Match probability"
               }
             ],
             "x": {
