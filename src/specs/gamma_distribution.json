@@ -54,7 +54,7 @@
           "axis": { "labels": false, "ticks": 0, "grid": false }
         },
         "y": {
-          "field": "count",
+          "field": "count_rows_in_comparison_vector_group",
           "scale": { "constant": 40, "type": "symlog" },
           "title": "count",
           "type": "quantitative",
@@ -192,12 +192,11 @@
           "axis": { "labels": false, "ticks": 0, "grid": false }
         },
         "y": {
-          "field": "count",
+          "field": "count_rows_in_comparison_vector_group",
           "scale": { "constant": 1, "type": "symlog" },
           "title": "count",
           "type": "quantitative",
-          "axis": { "tickCount": 0, "grid": false },
-          "title": ""
+          "axis": { "tickCount": 0, "grid": false }
         }
       },
       "mark": { "type": "bar", "clip": true },

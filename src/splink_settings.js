@@ -7,22 +7,22 @@ class Comparison {
     return this.original_dict["column_name"];
   }
 
+  get num_levels() {
+    return this.original_dict.comparison_levels.length;
+  }
+
   get columns_used() {
-    if (this.is_custom_column) {
-      return this.original_dict.custom_columns_used;
-    } else {
-      return [this.original_dict.col_name];
-    }
+    return this.original_dict["input_columns_used_by_case_statement"];
   }
 
   get column_case_expression_lookup() {
-    let expr = this.original_dict["case_expression"];
-    let parsed = parse_case_expression(expr);
-    let fmt = format_parsed_expression(parsed);
-    if (!("0" in fmt)) {
-      fmt["0"] = "else 0";
-    }
-    return fmt;
+    let lookup = {};
+    let comparison_levels = this.original_dict["comparison_levels"];
+    comparison_levels.forEach((d) => {
+      lookup[d["comparison_vector_value"]] = d["sql_condition"];
+    });
+
+    return lookup;
   }
 
   get_case_expression_for_level(level) {
@@ -30,11 +30,13 @@ class Comparison {
   }
 
   get m_probabilities() {
-    return this.original_dict["m_probabilities"];
+    let comparison_levels = this.original_dict["comparison_levels"];
+    return comparison_levels.map((d) => d["m_probability"]);
   }
 
   get u_probabilities() {
-    return this.original_dict["u_probabilities"];
+    let comparison_levels = this.original_dict["comparison_levels"];
+    return comparison_levels.map((d) => d["u_probability"]);
   }
 
   data_from_row(edge_row_as_dict) {
@@ -104,7 +106,7 @@ class SplinkSettings {
   get comparison_column_lookup() {
     let lookup = {};
 
-    this.comparison_columns.forEach((cc) => {
+    this.comparisons.forEach((cc) => {
       lookup[cc.name] = cc;
     });
 
@@ -112,7 +114,7 @@ class SplinkSettings {
   }
 
   get cols_used_by_model() {
-    const ccs = this.comparison_columns;
+    const ccs = this.comparisons;
     let cols_in_use = [];
     ccs.forEach((cc) => {
       cc.columns_used.forEach((used_col) => {
@@ -156,32 +158,3 @@ class SplinkSettings {
 }
 
 export { SplinkSettings, Comparison };
-
-function parse_case_expression(case_expr) {
-  const case_regex = /when[\s\S]+?then[\s\S]+?(\-?[012345678])/gi;
-  let matches = case_expr.matchAll(case_regex);
-  matches = [...matches];
-
-  let results = {};
-  matches.forEach((d) => {
-    const key = d[1];
-
-    if (key in results) {
-      results[key].push(d[0]);
-    } else {
-      results[key] = [d[0]];
-    }
-  });
-
-  return results;
-}
-
-function format_parsed_expression(parsed_case_expression) {
-  let formatted_expressions = {};
-
-  Object.entries(parsed_case_expression).forEach((k) => {
-    formatted_expressions[k[0]] = k[1].join("\n");
-  });
-
-  return formatted_expressions;
-}

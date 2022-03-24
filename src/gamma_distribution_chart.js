@@ -1,4 +1,4 @@
-import * as base_spec from "./specs/gamma_distribution.json";
+import base_spec from "./specs/gamma_distribution.json";
 
 import cloneDeep from "lodash.clonedeep";
 
@@ -63,7 +63,7 @@ function gamma_table_data(data, ss_object) {
     let gam_key_counter = 0;
     gamma_keys.forEach((k) => {
       let settings_col = ss_object.get_col_by_name(k.replace("gamma_", ""));
-      let num_levels = settings_col["original_dict"]["num_levels"];
+      let num_levels = settings_col.num_levels;
 
       let row = {};
       row["gam_name"] = k;

@@ -59,7 +59,7 @@ export function edge_row_to_table(edge_as_dict, splink_settings) {
 
 export function comparison_column_table(edge_as_dict, splink_settings) {
   // let splink_settings = new SplinkSettings
-  let ccs = splink_settings.comparison_columns;
+  let ccs = splink_settings.comparisons;
 
   let rows = [];
 
