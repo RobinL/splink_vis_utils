@@ -1,3 +1,4 @@
+import cloneDeep from "lodash.clonedeep";
 import {
   prob_to_bayes_factor,
   prob_to_log2_bayes_factor,
@@ -5,6 +6,7 @@ import {
 } from "./match_weight.js";
 
 function get_waterfall_row_single_column(gamma_key, row, splink_settings) {
+  let rows_for_column = [];
   let key = gamma_key;
   let gamma_value = row[key];
   let col_name = key.replace("gamma_", "");
@@ -17,7 +19,7 @@ function get_waterfall_row_single_column(gamma_key, row, splink_settings) {
 
   let bayes_factor = row["bf_" + col_name];
 
-  return {
+  let single_row = {
     bayes_factor: bayes_factor,
     column_name: col_name,
     gamma_column_name: "𝛾_" + col_name,
@@ -34,6 +36,23 @@ function get_waterfall_row_single_column(gamma_key, row, splink_settings) {
     value_r: value_r,
     sql_condition: this_cl.sql_condition,
   };
+  rows_for_column.push(single_row);
+
+  // If there's a term frequency adjustment for this column, we need a second row
+
+  let bf_tf_col_name = "bf_tf_adj_" + col_name;
+  if (bf_tf_col_name in row) {
+    let tf_row = cloneDeep(single_row);
+    tf_row["column_name"] = "tf_" + col_name;
+    bayes_factor = row[bf_tf_col_name];
+    tf_row["bayes_factor"] = bayes_factor;
+    tf_row["log2_bayes_factor"] = log2(bayes_factor);
+    tf_row["m_probability"] = null;
+    tf_row["u_probability"] = null;
+
+    rows_for_column.push(tf_row);
+  }
+  return rows_for_column;
 }
 
 function get_waterfall_data_comparison_columns(
@@ -43,9 +62,18 @@ function get_waterfall_data_comparison_columns(
 ) {
   let keys = Object.keys(row);
   keys = keys.filter((key) => key.startsWith("gamma_"));
-  return keys.map((gamma_key) =>
-    get_waterfall_row_single_column(gamma_key, row, splink_settings, term_freqs)
-  );
+
+  let column_rows = [];
+  keys.forEach((gamma_key) => {
+    let rows = get_waterfall_row_single_column(
+      gamma_key,
+      row,
+      splink_settings,
+      term_freqs
+    );
+    column_rows.push(...rows);
+  });
+  return column_rows;
 }
 
 function get_waterfall_data_lambda_row(splink_settings) {
