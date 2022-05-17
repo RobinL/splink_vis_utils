@@ -7,7 +7,7 @@ export { Runtime, Inspector };
 import { select, checkbox, range } from "@observablehq/inputs";
 export { select, checkbox, range };
 
-import define_cluster from "@robinl/to-embed-in-splink-outputs";
+import define_cluster from "5496e67e6ca05c7b";
 export { define_cluster };
 
 import define_comparison from "c43e4e0aeb54d263";
