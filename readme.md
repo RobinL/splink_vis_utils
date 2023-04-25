@@ -17,10 +17,11 @@ This means that splink version 3 can output a single html file which works offli
 
 #### To server the rolledup code
 
+```
 npx http-server --cors
 ./node_modules/.bin/rollup -c -w
 ./update_pkg.sh
-
+```
 #### Developing the observable notebooks
 
 To edit the observable notebooks, they need to be edited in the observable gui:
