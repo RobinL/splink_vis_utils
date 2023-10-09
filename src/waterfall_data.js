@@ -79,7 +79,7 @@ function get_waterfall_data_comparison_columns(
 function get_waterfall_data_lambda_row(splink_settings) {
   let row = {
     bayes_factor: prob_to_bayes_factor(
-      splink_settings.settings_dict.proportion_of_matches
+      splink_settings.settings_dict.probability_two_random_records_match
     ),
     column_name: "Prior",
     gamma_column_name: "",
@@ -88,7 +88,7 @@ function get_waterfall_data_lambda_row(splink_settings) {
     level_name: null,
 
     log2_bayes_factor: prob_to_log2_bayes_factor(
-      splink_settings.settings_dict.proportion_of_matches
+      splink_settings.settings_dict.probability_two_random_records_match
     ),
     m_probability: null,
 
