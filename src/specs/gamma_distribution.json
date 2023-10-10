@@ -6,31 +6,55 @@
       "continuousWidth": 400
     }
   },
-  "data": { "values": [] },
+  "data": {
+    "values": []
+  },
   "vconcat": [
     {
       "encoding": {
         "color": {
           "field": "match_probability",
-          "legend": { "title": "" },
+          "legend": {
+            "title": ""
+          },
           "scale": {
-            "domain": [0, 0.5, 1],
-            "range": ["red", "orange", "green"]
+            "domain": [
+              0,
+              0.5,
+              1
+            ],
+            "range": [
+              "red",
+              "orange",
+              "green"
+            ]
           },
           "type": "quantitative"
         },
         "tooltip": [
-          { "field": "gam_concat", "type": "nominal" },
-          { "field": "count", "type": "quantitative" },
+          {
+            "field": "gam_concat",
+            "type": "nominal"
+          },
+          {
+            "field": "count",
+            "type": "quantitative"
+          },
           {
             "field": "match_probability",
             "type": "quantitative",
             "format": ",.1%"
           },
-
-          { "field": "match_weight", "type": "quantitative", "format": ",.2f" },
-          { "field": "sum_matches", "type": "quantitative", "format": ",.1f" },
-
+          {
+            "field": "match_weight",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "sum_matches",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
           {
             "field": "proportion_of_comparisons",
             "type": "quantitative",
@@ -51,25 +75,50 @@
           },
           "title": "",
           "type": "nominal",
-          "axis": { "labels": false, "ticks": 0, "grid": false }
+          "axis": {
+            "labels": false,
+            "ticks": false,
+            "grid": false
+          }
         },
         "y": {
           "field": "count_rows_in_comparison_vector_group",
-          "scale": { "constant": 40, "type": "symlog" },
+          "scale": {
+            "constant": 40,
+            "type": "symlog"
+          },
           "type": "quantitative",
           "title": "Frequency count of comparison vector"
         }
       },
-      "mark": { "type": "bar", "clip": true },
+      "mark": {
+        "type": "bar",
+        "clip": true
+      },
       "title": {
         "subtitle": "Click bars on upmost chart to display example. Brush bottom chart to zoom. ",
         "text": "Count of comparison vector values"
       },
       "width": 1000,
-      "transform": [{ "filter": { "param": "brush" } }],
-      "selection": {
-        "gam_concat_signal": { "type": "single", "encodings": ["x"] }
-      }
+      "transform": [
+        {
+          "filter": {
+            "param": "brush"
+          }
+        }
+      ],
+      "params": [
+        {
+          "name": "gam_concat_signal",
+          "select": {
+            "type": "point",
+            "encodings": [
+              "x"
+            ]
+          },
+          "value": true
+        }
+      ]
     },
     {
       "layer": [
@@ -79,8 +128,16 @@
           },
           "mark": "rect",
           "width": 1000,
-          "height": { "step": 10 },
-          "transform": [{ "filter": { "param": "brush" } }],
+          "height": {
+            "step": 10
+          },
+          "transform": [
+            {
+              "filter": {
+                "param": "brush"
+              }
+            }
+          ],
           "encoding": {
             "y": {
               "field": "gam_name",
@@ -109,16 +166,31 @@
             },
             "color": {
               "field": "gam_value_norm",
-              "legend": { "title": "" },
+              "legend": {
+                "title": ""
+              },
               "type": "quantitative",
               "scale": {
-                "domain": [0, 0.5, 1],
-                "range": ["red", "orange", "green"]
+                "domain": [
+                  0,
+                  0.5,
+                  1
+                ],
+                "range": [
+                  "red",
+                  "orange",
+                  "green"
+                ]
               },
-              "legend": { "title": "" }
+              "legend": {
+                "title": ""
+              }
             },
             "tooltip": [
-              { "field": "gam_name", "type": "nominal" },
+              {
+                "field": "gam_name",
+                "type": "nominal"
+              },
               {
                 "field": "gam_value",
                 "type": "quantitative"
@@ -130,11 +202,21 @@
           "data": {
             "values": []
           },
-          "mark": { "type": "text", "fontSize": 8 },
+          "mark": {
+            "type": "text",
+            "fontSize": 8
+          },
           "width": 1000,
-          "height": { "step": 10 },
-
-          "transform": [{ "filter": { "param": "brush" } }],
+          "height": {
+            "step": 10
+          },
+          "transform": [
+            {
+              "filter": {
+                "param": "brush"
+              }
+            }
+          ],
           "encoding": {
             "y": {
               "field": "gam_name",
@@ -172,10 +254,20 @@
       "encoding": {
         "color": {
           "field": "match_probability",
-          "legend": { "title": "" },
+          "legend": {
+            "title": ""
+          },
           "scale": {
-            "domain": [0, 0.5, 1],
-            "range": ["red", "orange", "green"]
+            "domain": [
+              0,
+              0.5,
+              1
+            ],
+            "range": [
+              "red",
+              "orange",
+              "green"
+            ]
           },
           "type": "quantitative"
         },
@@ -188,25 +280,44 @@
           },
           "title": "Comparison vector value.  (Brush bottom chart to zoom. Click to reset.)",
           "type": "nominal",
-          "axis": { "labels": false, "ticks": 0, "grid": false }
+          "axis": {
+            "labels": false,
+            "ticks": 0,
+            "grid": false
+          }
         },
         "y": {
           "field": "count_rows_in_comparison_vector_group",
-          "scale": { "constant": 1, "type": "symlog" },
+          "scale": {
+            "constant": 1,
+            "type": "symlog"
+          },
           "title": "count",
           "type": "quantitative",
-          "axis": { "tickCount": 0, "grid": false }
+          "axis": {
+            "tickCount": 0,
+            "grid": false
+          }
         }
       },
-      "mark": { "type": "bar", "clip": true },
-      "title": { "text": "" },
-
+      "mark": {
+        "type": "bar",
+        "clip": true
+      },
+      "title": {
+        "text": ""
+      },
       "width": 1000,
       "height": 40,
       "params": [
         {
           "name": "brush",
-          "select": { "type": "interval", "encodings": ["x"] }
+          "select": {
+            "type": "interval",
+            "encodings": [
+              "x"
+            ]
+          }
         }
       ]
     }
