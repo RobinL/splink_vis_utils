@@ -73,3 +73,12 @@ Tests using Test Explorer should be operational, including breakpoints. If they 
 ```
 node --experimental-vm-modules node_modules/jest/bin/jest.js
 ```
+
+### Clarification on how notebook code gets rolled up
+
+One thing that’s a bit confusing is the 'chicken-and-egg' nature of
+the `splink_vis_utils`.
+
+it's rolled up and then `require`ed in the observable notebooks, but the notebooks themselves have to be present in `splink_vis_utils` (as a dependency)
+
+This isn't actually as confusing as it looks: the notebooks only use the `splink_vis_utils` library functinos, they don't import the notebooks, so there's no circular import problem
