@@ -77,16 +77,17 @@
           "type": "nominal",
           "axis": {
             "labels": false,
-            "ticks": false,
+            "ticks": 0,
             "grid": false
           }
         },
         "y": {
-          "field": "count_rows_in_comparison_vector_group",
+          "field": "count",
           "scale": {
             "constant": 40,
             "type": "symlog"
           },
+          "title": "count",
           "type": "quantitative",
           "title": "Frequency count of comparison vector"
         }
@@ -115,8 +116,7 @@
             "encodings": [
               "x"
             ]
-          },
-          "value": true
+          }
         }
       ]
     },
@@ -287,7 +287,7 @@
           }
         },
         "y": {
-          "field": "count_rows_in_comparison_vector_group",
+          "field": "count",
           "scale": {
             "constant": 1,
             "type": "symlog"
@@ -297,7 +297,8 @@
           "axis": {
             "tickCount": 0,
             "grid": false
-          }
+          },
+          "title": ""
         }
       },
       "mark": {
