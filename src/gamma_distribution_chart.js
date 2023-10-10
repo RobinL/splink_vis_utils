@@ -18,14 +18,15 @@ export function get_gamma_distribution_chart(
 ) {
   let base_spec_2 = cloneDeep(base_spec);
   let sort_field;
+  data.forEach((d) => {
+    d.sum_matches = d.match_probability * d.count;
+  });
   if (sort_bars == "sort_match_weight") {
     data.sort(sort_match_weight);
     sort_field = "match_weight";
   }
   if (sort_bars == "sort_sum_matches") {
-    data.forEach((d) => {
-      d.sum_matches = d.match_probability * d.count;
-    });
+
     data.sort(sort_sum_matches);
     sort_field = "sum_matches";
   }
