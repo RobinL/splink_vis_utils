@@ -8,7 +8,11 @@ class Comparison {
   }
 
   get num_levels() {
-    return this.original_dict.comparison_levels.length;
+    return this.comparison_levels.length;
+  }
+
+  get comparison_levels() {
+    return this.original_dict["comparison_levels"];
   }
 
   get columns_used() {
