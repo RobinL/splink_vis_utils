@@ -1,18 +1,35 @@
 {
-  "config": { "view": { "continuousWidth": 400, "continuousHeight": 300 } },
+  "config": {
+    "view": {
+      "continuousWidth": 400,
+      "continuousHeight": 300
+    }
+  },
   "title": {
-    "text": "Bayes factor intuition chart",
+    "text": "Match weights waterfall chart",
     "subtitle": "How each comparison column contributes to the final match score"
   },
-
   "transform": [
-    { "filter": "(datum.bayes_factor !== 1.0)" },
+    {
+      "filter": "(datum.bayes_factor !== 1.0)"
+    },
     {
       "window": [
-        { "op": "sum", "field": "log2_bayes_factor", "as": "sum" },
-        { "op": "lead", "field": "column_name", "as": "lead" }
+        {
+          "op": "sum",
+          "field": "log2_bayes_factor",
+          "as": "sum"
+        },
+        {
+          "op": "lead",
+          "field": "column_name",
+          "as": "lead"
+        }
       ],
-      "frame": [null, 0]
+      "frame": [
+        null,
+        0
+      ]
     },
     {
       "calculate": "datum.column_name === \"Final score\" ? datum.sum - datum.log2_bayes_factor : datum.sum",
@@ -42,18 +59,30 @@
       "calculate": "datum.sum < datum.previous_sum ? datum.sum : datum.previous_sum",
       "as": "sum_bottom"
     },
-    { "calculate": "(datum.sum + datum.previous_sum) / 2", "as": "center" },
+    {
+      "calculate": "(datum.sum + datum.previous_sum) / 2",
+      "as": "center"
+    },
     {
       "calculate": "(datum.log2_bayes_factor > 0 ? \"+\" : \"\") + datum.log2_bayes_factor",
       "as": "text_log2_bayes_factor"
     },
-    { "calculate": "datum.sum < datum.previous_sum ? 4 : -4", "as": "dy" },
+    {
+      "calculate": "datum.sum < datum.previous_sum ? 4 : -4",
+      "as": "dy"
+    },
     {
       "calculate": "datum.sum < datum.previous_sum ? \"top\" : \"bottom\"",
       "as": "baseline"
     },
-    { "calculate": "1. / (1 + pow(2, -1.*datum.sum))", "as": "prob" },
-    { "calculate": "0*datum.sum", "as": "zero" }
+    {
+      "calculate": "1. / (1 + pow(2, -1.*datum.sum))",
+      "as": "prob"
+    },
+    {
+      "calculate": "0*datum.sum",
+      "as": "zero"
+    }
   ],
   "layer": [
     {
@@ -61,13 +90,23 @@
         {
           "mark": "rule",
           "encoding": {
-            "y": { "field": "zero", "type": "quantitative" },
-            "size": { "value": 0.5 },
-            "color": { "value": "black" }
+            "y": {
+              "field": "zero",
+              "type": "quantitative"
+            },
+            "size": {
+              "value": 0.5
+            },
+            "color": {
+              "value": "black"
+            }
           }
         },
         {
-          "mark": { "type": "bar", "width": 60 },
+          "mark": {
+            "type": "bar",
+            "width": 60
+          },
           "encoding": {
             "color": {
               "condition": {
@@ -89,14 +128,21 @@
                 "field": "column_name",
                 "title": "Comparison column"
               },
-              { "type": "nominal", "field": "value_l", "title": "Value (L)" },
-              { "type": "nominal", "field": "value_r", "title": "Value (R)" },
+              {
+                "type": "nominal",
+                "field": "value_l",
+                "title": "Value (L)"
+              },
+              {
+                "type": "nominal",
+                "field": "value_r",
+                "title": "Value (R)"
+              },
               {
                 "type": "nominal",
                 "field": "gamma_index",
                 "title": "Gamma level"
               },
-
               {
                 "type": "nominal",
                 "field": "sql_condition",
@@ -140,17 +186,24 @@
               "axis": {
                 "grid": false,
                 "orient": "left",
-                "title": "log2(Bayes factor)"
+                "title": "Match weight"
               },
               "field": "previous_sum"
             },
-            "y2": { "field": "sum" }
+            "y2": {
+              "field": "sum"
+            }
           }
         },
         {
-          "mark": { "type": "text", "fontWeight": "bold" },
+          "mark": {
+            "type": "text",
+            "fontWeight": "bold"
+          },
           "encoding": {
-            "color": { "value": "white" },
+            "color": {
+              "value": "white"
+            },
             "text": {
               "condition": {
                 "type": "nominal",
@@ -162,13 +215,18 @@
             },
             "x": {
               "type": "nominal",
-              "axis": { "labelAngle": 0, "title": "Column" },
+              "axis": {
+                "labelAngle": 0,
+                "title": "Column"
+              },
               "field": "column_name",
               "sort": null
             },
             "y": {
               "type": "quantitative",
-              "axis": { "orient": "left" },
+              "axis": {
+                "orient": "left"
+              },
               "field": "center"
             }
           }
@@ -181,7 +239,9 @@
             "fontWeight": "bold"
           },
           "encoding": {
-            "color": { "value": "black" },
+            "color": {
+              "value": "black"
+            },
             "text": {
               "condition": {
                 "type": "nominal",
@@ -192,11 +252,17 @@
             },
             "x": {
               "type": "nominal",
-              "axis": { "labelAngle": 0, "title": "Column" },
+              "axis": {
+                "labelAngle": 0,
+                "title": "Column"
+              },
               "field": "column_name",
               "sort": null
             },
-            "y": { "type": "quantitative", "field": "sum_top" }
+            "y": {
+              "type": "quantitative",
+              "field": "sum_top"
+            }
           }
         },
         {
@@ -207,7 +273,9 @@
             "fontWeight": "bold"
           },
           "encoding": {
-            "color": { "value": "black" },
+            "color": {
+              "value": "black"
+            },
             "text": {
               "condition": {
                 "type": "nominal",
@@ -218,11 +286,17 @@
             },
             "x": {
               "type": "nominal",
-              "axis": { "labelAngle": 0, "title": "Column" },
+              "axis": {
+                "labelAngle": 0,
+                "title": "Column"
+              },
               "field": "column_name",
               "sort": null
             },
-            "y": { "type": "quantitative", "field": "sum_bottom" }
+            "y": {
+              "type": "quantitative",
+              "field": "sum_bottom"
+            }
           }
         }
       ]
@@ -238,11 +312,16 @@
       "encoding": {
         "x": {
           "type": "nominal",
-          "axis": { "labelAngle": 0, "title": "Column" },
+          "axis": {
+            "labelAngle": 0,
+            "title": "Column"
+          },
           "field": "column_name",
           "sort": null
         },
-        "x2": { "field": "lead" },
+        "x2": {
+          "field": "lead"
+        },
         "y": {
           "type": "quantitative",
           "axis": {
@@ -251,14 +330,24 @@
             "title": "Probability"
           },
           "field": "sum",
-          "scale": { "zero": false }
+          "scale": {
+            "zero": false
+          }
         }
       }
     }
   ],
   "height": 450,
-  "resolve": { "axis": { "y": "independent" } },
-  "width": { "step": 75 },
+  "resolve": {
+    "axis": {
+      "y": "independent"
+    }
+  },
+  "width": {
+    "step": 75
+  },
   "$schema": "https://vega.github.io/schema/vega-lite/v4.8.1.json",
-  "data": { "values": null }
+  "data": {
+    "values": null
+  }
 }

@@ -7,6 +7,9 @@ export { Runtime, Inspector };
 import { select, checkbox, range } from "@observablehq/inputs";
 export { select, checkbox, range };
 
+import { formatRowToAppearInTable } from "./format_data.js"
+export { formatRowToAppearInTable }
+
 import define_cluster from "5496e67e6ca05c7b";
 export { define_cluster };
 

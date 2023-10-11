@@ -1,5 +1,6 @@
 import { SplinkSettings } from "./splink_settings.js";
 import { table } from "./table.js";
+import { formatRowToAppearInTable } from "./format_data.js"
 
 export function node_rows_to_table(nodes_list_of_dicts, splink_settings) {
   const first_cols = splink_settings.cols_used_by_model_inc_add_to_retain;
@@ -18,6 +19,8 @@ export function node_rows_to_table(nodes_list_of_dicts, splink_settings) {
     });
     return d2;
   });
+
+  new_data = new_data.map(formatRowToAppearInTable)
 
   return table(new_data, { layout: "auto" });
 }

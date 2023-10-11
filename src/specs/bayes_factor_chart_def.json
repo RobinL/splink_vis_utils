@@ -87,14 +87,14 @@
             {
                 "type": "quantitative",
                 "field": "log2_bayes_factor",
-                "title": "log2(Bayes factor, K = m/u)",
+                "title": "Match weight",
                 "format": ".4f"
             }
         ],
         "x": {
             "type": "quantitative",
             "axis": {
-                "title": "log2(Bayes factor, K = m/u)",
+                "title": "Match weight",
                 "values": [
                     -10,
                     -5,

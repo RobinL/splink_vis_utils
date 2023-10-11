@@ -8,12 +8,21 @@ class Comparison {
   }
 
   get num_levels() {
-    return this.original_dict.comparison_levels.length;
+    return this.comparison_levels.length;
+  }
+
+  get comparison_levels() {
+    return this.original_dict["comparison_levels"];
   }
 
   get columns_used() {
     return this.original_dict["input_columns_used_by_case_statement"];
   }
+
+  get sanitised_name() {
+    // replace spaces in names in same fashion as Splink does behind the scenes
+    return this.name.replaceAll(' ', '_')
+  };
 
   // get column_case_expression_lookup() {
   //   let lookup = {};
@@ -121,7 +130,7 @@ class SplinkSettings {
     let lookup = {};
 
     this.comparisons.forEach((cc) => {
-      lookup[cc.name] = cc;
+      lookup[cc.sanitised_name] = cc;
     });
 
     return lookup;

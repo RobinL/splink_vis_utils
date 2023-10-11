@@ -18,14 +18,15 @@ export function get_gamma_distribution_chart(
 ) {
   let base_spec_2 = cloneDeep(base_spec);
   let sort_field;
+  data.forEach((d) => {
+    d.sum_matches = d.match_probability * d.count;
+  });
   if (sort_bars == "sort_match_weight") {
     data.sort(sort_match_weight);
     sort_field = "match_weight";
   }
   if (sort_bars == "sort_sum_matches") {
-    data.forEach((d) => {
-      d.sum_matches = d.match_probability * d.count;
-    });
+
     data.sort(sort_sum_matches);
     sort_field = "sum_matches";
   }
@@ -62,17 +63,23 @@ function gamma_table_data(data, ss_object) {
     counter += 1;
     let gam_key_counter = 0;
     gamma_keys.forEach((k) => {
-      let settings_col = ss_object.get_col_by_name(k.replace("gamma_", ""));
+      let data_col_name = k.replace("gamma_", "");
+      let settings_col = ss_object.get_col_by_name(data_col_name);
       let num_levels = settings_col.num_levels;
 
       let row = {};
       row["gam_name"] = k;
       row["gam_value"] = d[k];
-      row["gam_value_norm"] = d[k] == -1 ? null : d[k] / (num_levels - 1);
 
       row["gam_concat"] = d["gam_concat"];
       row["gam_concat_id"] = counter;
       row["gam_key_count"] = gam_key_counter;
+      row["bayes_factor"] = d[`bf_${data_col_name}`];
+      const log2 = Math.log2;
+      row["match_weight"] = log2(d[`bf_${data_col_name}`]);
+
+      row["label_for_charts"] = settings_col.comparison_level_lookup[row["gam_value"]]["label_for_charts"]
+      row["sql_condition"] = settings_col.comparison_level_lookup[row["gam_value"]]["sql_condition"]
       result_data.push(row);
       gam_key_counter += 1;
     });
