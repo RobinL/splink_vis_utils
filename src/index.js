@@ -7,10 +7,11 @@ export { Runtime, Inspector };
 import { select, checkbox, range } from "@observablehq/inputs";
 export { select, checkbox, range };
 
-import { observe } from "@observablehq/stdlib"
-export { observe }
-// import define_cluster from "5496e67e6ca05c7b";
-// export { define_cluster };
+import { formatRowToAppearInTable } from "./format_data.js"
+export { formatRowToAppearInTable }
+
+import define_cluster from "5496e67e6ca05c7b";
+export { define_cluster };
 
 import define_comparison from "c43e4e0aeb54d263";
 export { define_comparison };

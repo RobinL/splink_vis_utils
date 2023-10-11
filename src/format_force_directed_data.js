@@ -60,8 +60,9 @@ export function format_edges_data_for_force_directed(
     "match_weight",
   ];
 
+  const first_edge = edge_data.length > 0 ? edge_data[0] : [];
   additional_cols = additional_cols.filter((col) => {
-    return col in edge_data[0];
+    return col in first_edge;
   });
 
   edge_data.forEach(function (edge) {

@@ -1,5 +1,6 @@
 import { SplinkSettings } from "./splink_settings.js";
 import { table } from "./table.js";
+import { formatRowToAppearInTable } from "./format_data.js"
 
 export function node_row_to_table(node_as_dict, splink_settings) {
   const first_cols = splink_settings.cols_used_by_model_inc_add_to_retain;
@@ -52,6 +53,10 @@ export function edge_row_to_table(edge_as_dict, splink_settings) {
     row_1_ordered[col] = row_1[col];
     row_2_ordered[col] = row_2[col];
   });
+
+  row_1_ordered = formatRowToAppearInTable(row_1_ordered);
+  row_2_ordered = formatRowToAppearInTable(row_2_ordered);
+
   let table_data = [row_1_ordered, row_2_ordered];
 
   return table(table_data, { layout: "auto" });
