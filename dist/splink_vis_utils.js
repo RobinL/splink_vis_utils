@@ -309,7 +309,7 @@
  * ---
  *
  * Name: 5496e67e6ca05c7b
- * Version: 1844.0.0
+ * Version: 1862.0.0
  * License: null
  * Private: false
  * Homepage: https://observablehq.com/d/5496e67e6ca05c7b
@@ -318,7 +318,7 @@
  * ---
  *
  * Name: c43e4e0aeb54d263
- * Version: 865.0.0
+ * Version: 866.0.0
  * License: null
  * Private: false
  * Homepage: https://observablehq.com/d/c43e4e0aeb54d263
@@ -8782,9 +8782,9 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 	)
 	)}
 
-	function _observe_chart_data(splink_vis_utils){return(
+	function _observe_chart_data(Generators){return(
 	function observe_chart_data(chart, signal_name) {
-	  return splink_vis_utils.observe(function (notify) {
+	  return Generators.observe(function (notify) {
 	    const signaled = (name, value) => notify(chart.signal(signal_name));
 	    chart.addSignalListener(signal_name, signaled);
 	    notify(chart.signal(signal_name));
@@ -8850,7 +8850,7 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 	  main.variable(observer()).define(["md"], _22);
 	  main.variable(observer("create_comparison_vector_row_lookup")).define("create_comparison_vector_row_lookup", _create_comparison_vector_row_lookup);
 	  main.variable(observer("comparison_vector_row_lookup")).define("comparison_vector_row_lookup", ["create_comparison_vector_row_lookup","comparison_vector_data"], _comparison_vector_row_lookup);
-	  main.variable(observer("observe_chart_data")).define("observe_chart_data", ["splink_vis_utils"], _observe_chart_data);
+	  main.variable(observer("observe_chart_data")).define("observe_chart_data", ["Generators"], _observe_chart_data);
 	  main.variable(observer()).define(["md"], _26);
 	  main.variable(observer("chart_spec_with_data")).define("chart_spec_with_data", ["splink_vis_utils","filtered_comparison_vector_data","ss","new_width","sort_bars_option"], _chart_spec_with_data);
 	  main.variable(observer()).define(["md"], _28);
@@ -9949,7 +9949,7 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 		}
 	};
 	var title = {
-		text: "Bayes factor intuition chart",
+		text: "Match weights waterfall chart",
 		subtitle: "How each comparison column contributes to the final match score"
 	};
 	var transform = [
@@ -10129,7 +10129,7 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 							axis: {
 								grid: false,
 								orient: "left",
-								title: "log2(Bayes factor)"
+								title: "Match weight"
 							},
 							field: "previous_sum"
 						},
