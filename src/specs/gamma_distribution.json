@@ -165,20 +165,20 @@
               "title": ""
             },
             "color": {
-              "field": "gam_value_norm",
+              "field": "match_weight",
               "legend": {
-                "title": ""
+                "title": "Match weight"
               },
               "type": "quantitative",
               "scale": {
                 "domain": [
+                  -10,
                   0,
-                  0.5,
-                  1
+                  10
                 ],
                 "range": [
                   "red",
-                  "orange",
+                  "#bbbbbb",
                   "green"
                 ]
               },
@@ -193,6 +193,10 @@
               },
               {
                 "field": "gam_value",
+                "type": "quantitative"
+              },
+              {
+                "field": "match_weight",
                 "type": "quantitative"
               }
             ]
@@ -248,14 +252,19 @@
             }
           }
         }
-      ]
+      ],
+      "resolve": {
+        "scale": {
+          "color": "independent"
+        }
+      }
     },
     {
       "encoding": {
         "color": {
           "field": "match_probability",
           "legend": {
-            "title": ""
+            "title": "Match probability"
           },
           "scale": {
             "domain": [
@@ -322,5 +331,10 @@
         }
       ]
     }
-  ]
+  ],
+  "resolve": {
+    "scale": {
+      "color": "shared"
+    }
+  }
 }

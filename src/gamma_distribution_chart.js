@@ -63,7 +63,8 @@ function gamma_table_data(data, ss_object) {
     counter += 1;
     let gam_key_counter = 0;
     gamma_keys.forEach((k) => {
-      let settings_col = ss_object.get_col_by_name(k.replace("gamma_", ""));
+      let data_col_name = k.replace("gamma_", "");
+      let settings_col = ss_object.get_col_by_name(data_col_name);
       let num_levels = settings_col.num_levels;
 
       let row = {};
@@ -74,6 +75,9 @@ function gamma_table_data(data, ss_object) {
       row["gam_concat"] = d["gam_concat"];
       row["gam_concat_id"] = counter;
       row["gam_key_count"] = gam_key_counter;
+      row["bayes_factor"] = d[`bf_${data_col_name}`];
+      const log2 = Math.log2;
+      row["match_weight"] = log2(d[`bf_${data_col_name}`]);
       result_data.push(row);
       gam_key_counter += 1;
     });

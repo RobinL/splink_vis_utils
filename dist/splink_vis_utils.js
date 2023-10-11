@@ -5547,7 +5547,7 @@
 		when: when
 	});
 
-	function resolve$1(name, base) {
+	function resolve$2(name, base) {
 	  if (/^(\w+:)|\/\//i.test(name)) return name;
 	  if (/^[.]{0,2}\//i.test(name)) return new URL(name, base == null ? location : base).href;
 	  if (!name.length || /^[\s._]/.test(name) || /\s$/.test(name)) throw new Error("illegal name");
@@ -5644,7 +5644,7 @@
 	    Plot: () => require(plot.resolve()),
 	    __query: () => __query,
 	    require: () => require,
-	    resolve: () => resolve$1, // deprecated; use async require.resolve instead
+	    resolve: () => resolve$2, // deprecated; use async require.resolve instead
 	    SQLite: () => SQLite(require),
 	    SQLiteDatabaseClient: () => SQLiteDatabaseClient,
 	    topojson: () => require(topojson.resolve()),
@@ -8111,14 +8111,16 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 
 	function _get_gammas_filters(html,splink_vis_utils){return(
 	function get_gammas_filters(splink_settings_object) {
+	  // splink settings Comparisons
 	  let ss_cols = splink_settings_object.comparisons;
 
 	  const form = html`<form>
     ${ss_cols.map((cc) => {
-      let num_levels = cc.num_levels;
-      let select_values = [...Array(num_levels).keys()];
-      select_values.unshift(-1);
-      select_values.unshift("Any");
+      let select_values = cc.comparison_levels.map((cl) => {
+        return [cl.label_for_charts, cl.comparison_vector_value];
+      });
+      select_values.unshift(["Any", "Any"]);
+      select_values = new Map(select_values);
 
       return html`<div id='id_${cc.name}'>${splink_vis_utils.select(
         select_values,
@@ -8208,6 +8210,10 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 	  cvd_filtered = cvd_filtered.filter(
 	    (d) => d.count_rows_in_comparison_vector_group >= filter_count
 	  );
+
+	  if (cvd_filtered.length == 0) {
+	    cvd_filtered = [{}];
+	  }
 
 	  return cvd_filtered;
 	}
@@ -9723,7 +9729,7 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 		}
 	];
 	var height = 450;
-	var resolve = {
+	var resolve$1 = {
 		axis: {
 			y: "independent"
 		}
@@ -9741,7 +9747,7 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 		transform: transform,
 		layer: layer,
 		height: height,
-		resolve: resolve,
+		resolve: resolve$1,
 		width: width,
 		$schema: $schema$1,
 		data: data$1
@@ -9754,7 +9760,7 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 		transform: transform,
 		layer: layer,
 		height: height,
-		resolve: resolve,
+		resolve: resolve$1,
 		width: width,
 		$schema: $schema$1,
 		data: data$1,
@@ -10203,20 +10209,20 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 							title: ""
 						},
 						color: {
-							field: "gam_value_norm",
+							field: "match_weight",
 							legend: {
 								title: ""
 							},
 							type: "quantitative",
 							scale: {
 								domain: [
+									-10,
 									0,
-									0.5,
-									1
+									10
 								],
 								range: [
 									"red",
-									"orange",
+									"#bbbbbb",
 									"green"
 								]
 							}
@@ -10228,6 +10234,10 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 							},
 							{
 								field: "gam_value",
+								type: "quantitative"
+							},
+							{
+								field: "match_weight",
 								type: "quantitative"
 							}
 						]
@@ -10284,14 +10294,19 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 						}
 					}
 				}
-			]
+			],
+			resolve: {
+				scale: {
+					color: "independent"
+				}
+			}
 		},
 		{
 			encoding: {
 				color: {
 					field: "match_probability",
 					legend: {
-						title: ""
+						title: "Match probability"
 					},
 					scale: {
 						domain: [
@@ -10358,11 +10373,17 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 			]
 		}
 	];
+	var resolve = {
+		scale: {
+			color: "shared"
+		}
+	};
 	var base_spec = {
 		$schema: $schema,
 		config: config,
 		data: data,
-		vconcat: vconcat
+		vconcat: vconcat,
+		resolve: resolve
 	};
 
 	function sort_match_weight(a, b) {
@@ -10426,7 +10447,8 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 	    counter += 1;
 	    let gam_key_counter = 0;
 	    gamma_keys.forEach((k) => {
-	      let settings_col = ss_object.get_col_by_name(k.replace("gamma_", ""));
+	      let data_col_name = k.replace("gamma_", "");
+	      let settings_col = ss_object.get_col_by_name(data_col_name);
 	      let num_levels = settings_col.num_levels;
 
 	      let row = {};
@@ -10437,6 +10459,9 @@ ${splink_vis_utils.comparison_column_table(selected_edge, ss)}`;
 	      row["gam_concat"] = d["gam_concat"];
 	      row["gam_concat_id"] = counter;
 	      row["gam_key_count"] = gam_key_counter;
+	      row["bayes_factor"] = d[`bf_${data_col_name}`];
+	      const log2 = Math.log2;
+	      row["match_weight"] = log2(d[`bf_${data_col_name}`]);
 	      result_data.push(row);
 	      gam_key_counter += 1;
 	    });
