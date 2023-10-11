@@ -13,22 +13,24 @@ export default {
       name: "splink_vis_utils",
     },
   ],
-  plugins: [json(), nodeResolve(), commonjs(), license({
-    thirdParty: {
-      output: {
-        file: "dist/dependencies-licenses.txt", // File where the licenses will be written
-        encoding: "utf-8", // The encoding of the output file
-      },
-      includePrivate: true, // Include private packages if any
-
-    },
-    banner: {
-      commentStyle: "regular",
-      content: {
-        // Include the generated dependencies-licenses.txt file in the banner
-        file: "dist/dependencies-licenses.txt",
-        encoding: "utf-8",
-      },
-    },
-  }),],
+  plugins: [json(), nodeResolve(), commonjs()],
 };
+
+// license({
+//   thirdParty: {
+//     output: {
+//       file: "dist/dependencies-licenses.txt", // File where the licenses will be written
+//       encoding: "utf-8", // The encoding of the output file
+//     },
+//     includePrivate: true, // Include private packages if any
+
+//   },
+//   banner: {
+//     commentStyle: "regular",
+//     content: {
+//       // Include the generated dependencies-licenses.txt file in the banner
+//       file: "dist/dependencies-licenses.txt",
+//       encoding: "utf-8",
+//     },
+//   },
+// }),

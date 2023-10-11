@@ -31,6 +31,9 @@
     "@observablehq/runtime": "^5.9.3",
     "5496e67e6ca05c7b": "https://api.observablehq.com/d/5496e67e6ca05c7b@1862.tgz?v=3",
     "c43e4e0aeb54d263": "https://api.observablehq.com/d/c43e4e0aeb54d263@866.tgz?v=3",
-    "lodash.clonedeep": "^4.5.0"
+    "lodash.clonedeep": "^4.5.0",
+    "vega": "^5.25.0",
+    "vega-embed": "^6.23.0",
+    "vega-lite": "^5.16.0"
   }
 }
