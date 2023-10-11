@@ -70,7 +70,6 @@ function gamma_table_data(data, ss_object) {
       let row = {};
       row["gam_name"] = k;
       row["gam_value"] = d[k];
-      row["gam_value_norm"] = d[k] == -1 ? null : d[k] / (num_levels - 1);
 
       row["gam_concat"] = d["gam_concat"];
       row["gam_concat_id"] = counter;
@@ -78,6 +77,9 @@ function gamma_table_data(data, ss_object) {
       row["bayes_factor"] = d[`bf_${data_col_name}`];
       const log2 = Math.log2;
       row["match_weight"] = log2(d[`bf_${data_col_name}`]);
+
+      row["label_for_charts"] = settings_col.comparison_level_lookup[row["gam_value"]]["label_for_charts"]
+      row["sql_condition"] = settings_col.comparison_level_lookup[row["gam_value"]]["sql_condition"]
       result_data.push(row);
       gam_key_counter += 1;
     });

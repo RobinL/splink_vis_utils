@@ -14,9 +14,6 @@
       "encoding": {
         "color": {
           "field": "match_probability",
-          "legend": {
-            "title": ""
-          },
           "scale": {
             "domain": [
               0,
@@ -29,7 +26,11 @@
               "green"
             ]
           },
-          "type": "quantitative"
+          "type": "quantitative",
+          "legend": {
+            "title": "Match probability",
+            "offset": -70
+          }
         },
         "tooltip": [
           {
@@ -77,7 +78,7 @@
           "type": "nominal",
           "axis": {
             "labels": false,
-            "ticks": 0,
+            "ticks": false,
             "grid": false
           }
         },
@@ -87,7 +88,6 @@
             "constant": 40,
             "type": "symlog"
           },
-          "title": "count",
           "type": "quantitative",
           "title": "Frequency count of comparison vector"
         }
@@ -166,9 +166,6 @@
             },
             "color": {
               "field": "match_weight",
-              "legend": {
-                "title": "Match weight"
-              },
               "type": "quantitative",
               "scale": {
                 "domain": [
@@ -183,12 +180,16 @@
                 ]
               },
               "legend": {
-                "title": ""
+                "title": "Match weight"
               }
             },
             "tooltip": [
               {
                 "field": "gam_name",
+                "type": "nominal"
+              },
+              {
+                "field": "label_for_charts",
                 "type": "nominal"
               },
               {
@@ -198,6 +199,10 @@
               {
                 "field": "match_weight",
                 "type": "quantitative"
+              },
+              {
+                "field": "sql_condition",
+                "type": "nominal"
               }
             ]
           }
@@ -263,9 +268,7 @@
       "encoding": {
         "color": {
           "field": "match_probability",
-          "legend": {
-            "title": "Match probability"
-          },
+          "legend": null,
           "scale": {
             "domain": [
               0,
@@ -301,13 +304,12 @@
             "constant": 1,
             "type": "symlog"
           },
-          "title": "count",
           "type": "quantitative",
           "axis": {
             "tickCount": 0,
             "grid": false
           },
-          "title": ""
+          "title": null
         }
       },
       "mark": {
@@ -331,10 +333,5 @@
         }
       ]
     }
-  ],
-  "resolve": {
-    "scale": {
-      "color": "shared"
-    }
-  }
+  ]
 }
