@@ -20,10 +20,13 @@ export function get_gamma_distribution_chart(
   let sort_field;
   data.forEach((d) => {
     d.sum_matches = d.match_probability * d.count;
+
+    const bf = Math.pow(2, d.sort_avg_match_weight);
+    d.avg_match_probability = bf / (1 + bf);
   });
   if (sort_bars == "sort_match_weight") {
     data.sort(sort_match_weight);
-    sort_field = "match_weight";
+    sort_field = "sort_avg_match_weight";
   }
   if (sort_bars == "sort_sum_matches") {
 
@@ -77,6 +80,7 @@ function gamma_table_data(data, ss_object) {
       row["bayes_factor"] = d[`bf_${data_col_name}`];
       const log2 = Math.log2;
       row["match_weight"] = log2(d[`bf_${data_col_name}`]);
+      row["sort_avg_match_weight"] = d["sort_avg_match_weight"]
 
       row["label_for_charts"] = settings_col.comparison_level_lookup[row["gam_value"]]["label_for_charts"]
       row["sql_condition"] = settings_col.comparison_level_lookup[row["gam_value"]]["sql_condition"]
