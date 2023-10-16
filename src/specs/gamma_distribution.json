@@ -13,7 +13,7 @@
     {
       "encoding": {
         "color": {
-          "field": "match_probability",
+          "field": "avg_match_probability",
           "scale": {
             "domain": [
               0,
@@ -42,14 +42,16 @@
             "type": "quantitative"
           },
           {
-            "field": "match_probability",
+            "field": "avg_match_probability",
             "type": "quantitative",
-            "format": ",.1%"
+            "format": ",.1%",
+            "title": "Match probability"
           },
           {
             "field": "match_weight",
             "type": "quantitative",
-            "format": ",.2f"
+            "format": ",.2f",
+            "title": "Match weight"
           },
           {
             "field": "sum_matches",
@@ -60,17 +62,12 @@
             "field": "proportion_of_comparisons",
             "type": "quantitative",
             "format": ",.1%"
-          },
-          {
-            "field": "cumulative_comparisons",
-            "type": "quantitative",
-            "format": ",.1%"
           }
         ],
         "x": {
           "field": "gam_concat",
           "sort": {
-            "field": "match_weight",
+            "field": "sort_avg_match_weight",
             "op": "sum",
             "order": "ascending"
           },
@@ -267,7 +264,7 @@
     {
       "encoding": {
         "color": {
-          "field": "match_probability",
+          "field": "avg_match_probability",
           "legend": null,
           "scale": {
             "domain": [
@@ -286,7 +283,7 @@
         "x": {
           "field": "gam_concat",
           "sort": {
-            "field": "match_weight",
+            "field": "sort_avg_match_weight",
             "op": "sum",
             "order": "ascending"
           },
